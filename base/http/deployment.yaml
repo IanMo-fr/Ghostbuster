@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ghostbuster-http
-          image: ghostbuster-http:latest
+          image: docker.io/library/ghostbuster-tcp
           ports:
             - containerPort: 8081
           readinessProbe:

@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
         - name: ghostbuster-grpc
-          image: ghostbuster-grpc:latest
+          image: docker.io/library/ghostbuster-grpc
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 50051
           readinessProbe:
