@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: ghostbuster-http
-          image: docker.io/library/ghostbuster-tcp
+          image: docker.io/library/ghostbuster-http
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081
