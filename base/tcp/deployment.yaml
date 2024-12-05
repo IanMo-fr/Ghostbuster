@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghostbuster-tcp
+  namespace: ghostbuster
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghostbuster-tcp
+  template:
+    metadata:
+      labels:
+        app: ghostbuster-tcp
+    spec:
+      containers:
+        - name: ghostbuster-tcp
+          image: ghostbuster-tcp:latest
+          ports:
+            - name: ready-port
+              containerPort: 5004  # Port utilisé pour la readiness probe
+            - name: alive-port
+              containerPort: 5003  # Port utilisé pour la liveness probe
+            - name: start-port
+              containerPort: 5002  # Port utilisé pour la startup probe
+            - name: primaris-port
+              containerPort: 5000  # Autre port générique
+            - name: secondis-port
+              containerPort: 5001  # Autre port générique
+          readinessProbe:
+            tcpSocket:
+              port: 5004  # Vérification de readiness via le port 5004
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 5003  # Vérification de liveness via le port 5003
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          startupProbe:
+            tcpSocket:
+              port: 5002  # Vérification de startup via le port 5002
+            initialDelaySeconds: 35
+            periodSeconds: 10

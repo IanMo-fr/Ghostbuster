@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghostbuster-tcp
+  namespace: ghostbuster
+spec:
+  selector:
+    app: ghostbuster-tcp
+  ports:
+    - name: ready-port
+      protocol: TCP
+      port: 5004
+      targetPort: 5004  # correspond au port de readiness probe
+    - name: alive-port
+      protocol: TCP
+      port: 5003
+      targetPort: 5003  # correspond au port de liveness probe
+    - name: start-port
+      protocol: TCP
+      port: 5002
+      targetPort: 5002  # correspond au port de startup probe
+    - name: primaris-port
+      protocol: TCP
+      port: 5000
+      targetPort: 5000  # autre port générique
+    - name: secondis-port
+      protocol: TCP
+      port: 5001
+      targetPort: 5001  # autre port générique

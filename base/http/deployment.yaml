@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghostbuster-http
+  namespace: ghostbuster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghostbuster-http
+  template:
+    metadata:
+      labels:
+        app: ghostbuster-http
+        namespace: ghostbuster
+    spec:
+      containers:
+        - name: ghostbuster-http
+          image: ghostbuster-http:latest
+          ports:
+            - containerPort: 8081
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /health/live
+              port: 8081
+            initialDelaySeconds: 35
+            periodSeconds: 10

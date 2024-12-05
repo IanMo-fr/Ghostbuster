@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghostbuster-grpc
+  namespace: ghostbuster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghostbuster-grpc
+  template:
+    metadata:
+      labels:
+        app: ghostbuster-grpc
+    spec:
+      containers:
+        - name: ghostbuster-grpc
+          image: ghostbuster-grpc:latest
+          ports:
+            - containerPort: 50051
+          readinessProbe:
+            grpc:
+              port: 50051
+              service: ghostbuster.Ghostbuster
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            grpc:
+              port: 50051
+              service: ghostbuster.Ghostbuster
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          startupProbe:
+            grpc:
+              port: 50051
+              service: ghostbuster.Ghostbuster
+            initialDelaySeconds: 15
+            periodSeconds: 10
