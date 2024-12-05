@@ -17,6 +17,8 @@ spec:
       containers:
         - name: ghostbuster-tcp
           image: docker.io/library/ghostbuster-tcp
+          imagePullPolicy: IfNotPresent
+
           ports:
             - name: ready-port
               containerPort: 5004  # Port utilisé pour la readiness probe
